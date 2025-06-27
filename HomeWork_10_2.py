@@ -32,23 +32,25 @@ integr_analit, error = quad(lambda x: func(x), a, b)
 
 #------------------------------------------------------#
 # Метод Монте-Карло
-N = 100_000 # кількість випадкових точок
+N = 100 # кількість випадкових точок
 # Генерація випадкових точок
 x_rand = np.random.uniform(a, b, N)
 y_rand = np.random.uniform(min_y_value, max_y_value, N)
 
-inside_pioints_pos = [
+# Точки, що попадають між віссю Х та функцією над віссю Х на проміжку a - b
+inside_points_pos = [
     1 for i in range(N)
     if (func(x_rand[i]) >= y_rand[i] and func(x_rand[i]) >= 0 and y_rand[i] >= 0)
 ]
 
-inside_pioints_neg = [
+# Точки, що попадають між віссю Х та функцією під віссю Х на проміжку a - b
+inside_points_neg = [
     1 for i in range(N)
     if (func(x_rand[i]) <= y_rand[i] and func(x_rand[i]) < 0 and y_rand[i] < 0)
 ]
 
-# Значення інтегралу як аналітичної площі фігури
-integr_exp = (len(inside_pioints_pos) - len(inside_pioints_neg)) / N * S_square
+# Значення інтегралу за методом Монте-Карло
+integr_exp = (len(inside_points_pos) - len(inside_points_neg)) / N * S_square
 #------------------------------------------------------#
 
 # Створюємо область графіку та малюємо криву функції та наносимо згенеровані точки
